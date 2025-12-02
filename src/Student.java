@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * Abstract base class for a student.
+ * Contains common attributes like name, major, and GPA.
+ */
 public abstract class Student {
     protected String name;
     protected int age;
@@ -10,5 +14,11 @@ public abstract class Student {
     protected List<String> roommatePreferences;
     protected List<String> previousInternships;
 
+    /**
+     * Calculates a connection strength score between this student and another.
+     *
+     * @param other The other student to compare against.
+     * @return An integer score (higher is stronger).
+     */
     public abstract int calculateConnectionStrength(Student other);
 }
