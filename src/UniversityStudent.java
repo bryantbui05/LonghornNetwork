@@ -7,7 +7,9 @@ import java.util.*;
 public class UniversityStudent extends Student {
 
     private UniversityStudent roommate;
-    // TODO: Constructor and additional methods to be implemented
+    private List<String> chatHistory;
+    private List<String> friendRequestHistory;
+
     /**
      * Constructs a new UniversityStudent with the given profile information.
      *
@@ -20,7 +22,6 @@ public class UniversityStudent extends Student {
      * @param roommatePreferences  Ordered list of preferred roommates by name.
      * @param previousInternships  List of previous internship employers.
      */
-    
     public UniversityStudent(String name, int age, String gender, int year, String major, double gpa, List<String> roommatePreferences, List<String> previousInternships) {
         this.name = name;
         this.age = age;
@@ -30,6 +31,9 @@ public class UniversityStudent extends Student {
         this.gpa = gpa;
         this.roommatePreferences = new ArrayList<>(roommatePreferences);
         this.previousInternships = new ArrayList<>(previousInternships);
+        // Initialize history lists
+        this.chatHistory = new ArrayList<>();
+        this.friendRequestHistory = new ArrayList<>();
     }
 
     /**
@@ -48,6 +52,47 @@ public class UniversityStudent extends Student {
      */
     public UniversityStudent getRoommate() {
         return this.roommate;
+    }
+
+    /**
+     * Thread-safe method to add a chat message to history.
+     * @param message The message log to add.
+     */
+    public synchronized void addChat(String message) {
+        this.chatHistory.add(message);
+    }
+
+    /**
+     * Thread-safe retrieval of chat history.
+     * @return A copy of the chat history.
+     */
+    public synchronized List<String> getChatHistory() {
+        return new ArrayList<>(this.chatHistory);
+    }
+
+    /**
+     * Thread-safe method to add a friend request log to history.
+     * @param request The request log to add.
+     */
+    public synchronized void addFriendRequest(String request) {
+        this.friendRequestHistory.add(request);
+    }
+
+    /**
+     * Thread-safe retrieval of friend request history.
+     * @return A copy of the friend request history.
+     */
+    public synchronized List<String> getFriendRequestHistory() {
+        return new ArrayList<>(this.friendRequestHistory);
+    }
+
+    /**
+     * Clears the chat and friend request history. 
+     * Useful for resetting state between test runs.
+     */
+    public synchronized void clearHistory() {
+        this.chatHistory.clear();
+        this.friendRequestHistory.clear();
     }
 
     /**
@@ -94,4 +139,3 @@ public class UniversityStudent extends Student {
         return this.name;
     }
 }
-

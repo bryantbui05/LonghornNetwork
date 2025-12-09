@@ -23,13 +23,14 @@ public class FriendRequestThread implements Runnable {
      */
     @Override
     public void run() {
-        // Method signature only
         try {
             semaphore.acquire();
-            System.out.println("FriendRequest from " + sender.getName() + " to " + receiver.getName());
+            String log = "Friend Request from " + sender.getName() + " to " + receiver.getName();
+            sender.addFriendRequest(log);
+            receiver.addFriendRequest(log);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            System.err.println("FriendRequest interrupted: " + e.getMessage());
+            System.err.println("Friend Request interrupted: " + e.getMessage());
         } finally {
             semaphore.release();
         }

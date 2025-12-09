@@ -27,10 +27,11 @@ public class ChatThread implements Runnable {
      */
     @Override
     public void run() {
-        // Method signature only
         try {
             semaphore.acquire();
-            System.out.println("Chat from " + sender.getName() + " to " + receiver.getName() + ": " + message);
+            String log = "Chat from " + sender.getName() + " to " + receiver.getName() + ": " + message;
+            sender.addChat(log);
+            receiver.addChat(log);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.err.println("Chat interrupted: " + e.getMessage());
